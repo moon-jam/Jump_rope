@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <title>Jump Rope Guy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        #video-preview {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Jump Rope Guy</h1>
+        <div class="form-container">
+            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" id="upload-form">
+                <div class="form-group">
+                    <input type="file" name="video" class="form-control-file" id="video-input" accept="video/*" capture="user">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" id="upload-button" disabled>Upload Video</button>
+                </div>
+            </form>
+        </div>
+        <div id="video-preview-container" class="text-center d-none">
+            <video id="video-preview" width="640" height="360" controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('video_list') }}" class="btn btn-primary">Result List</a>
+        </div>
+    </div>
+
+    <script>
+        const videoInput = document.getElementById('video-input');
+        const videoPreview = document.getElementById('video-preview');
+        const videoPreviewContainer = document.getElementById('video-preview-container');
+        const uploadButton = document.getElementById('upload-button');
+        const uploadForm = document.getElementById('upload-form');
+
+        // 監聽影片選擇事件
+        videoInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // 讀取選擇的影片檔案，並將其賦值給影片預覽元素
+                const videoURL = URL.createObjectURL(file);
+                videoPreview.src = videoURL;
+
+                // 顯示影片預覽區塊
+                videoPreviewContainer.classList.remove('d-none');
+
+                // 啟用按鈕
+                uploadButton.disabled = false;
+            } else {
+                // 隱藏影片預覽區塊
+                videoPreviewContainer.classList.add('d-none');
+
+                // 禁用按鈕
+                uploadButton.disabled = true;
+            }
+        });
+
+        // 如果影片上傳後，按下上傳按鈕後顯示 Loading...
+        uploadForm.addEventListener('submit', () => {
+            uploadButton.innerText = 'Uploading...';
+        });
+    </script>
+</body>
+</html>

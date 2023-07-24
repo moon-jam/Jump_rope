@@ -1,0 +1,58 @@
+<!-- video_list.html -->
+<!doctype html>
+<html>
+<head>
+    <title>Video List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Video List</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Original Video</th>
+                    <th>Upload Time</th>
+                    <th>Score</th>
+                    <th>Times</th>
+                    <th>Rank</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video_info in video_list_info %}
+                    <tr onclick="window.location.href='{{ url_for('result_page', video='processed_' + video_info['full_filename']) }}';">
+                        <td>{{ video_info['video_name'] }}</td>
+                        <td>{{ video_info['upload_time'] }}</td>
+                        <td>{{ video_info['score'] }}</td>
+                        <td>{{ video_info['times'] }}</td>
+                        <td>{{ video_info['rank'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <div class="mt-3">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

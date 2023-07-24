@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <title>Processing Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Processing Result</h1>
+        <div class="text-center">
+            <video id="processed-video" width="640" height="360" controls>
+                <source src="{{ url_for('download', video=video_name) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div id="processing-message" class="mt-3" style="display: none;">
+                Processing... Please wait.
+            </div>
+            <div class="mt-3">
+                <a href="{{ url_for('download', video=video_name) }}" id="download-link" download class="btn btn-primary" style="display: none;">Download Processed Video</a>
+            </div>
+            <div class="mt-3">
+                <a href="{{ url_for('download_original', video=video_name[10:]) }}" class="btn btn-primary">Download Original Video</a>
+            </div>
+            <div class="mt-3">
+                <a href="/" class="btn btn-primary">Back to Home</a>
+                <a href="{{ url_for('video_list') }}" class="btn btn-primary">Result List</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 取得處理中訊息的元素
+        const processingMessage = document.getElementById('processing-message');
+        // 取得下載按鈕的元素
+        const downloadButton = document.getElementById('download-link');
+        // 取得處理過後的影片的元素
+        const processedVideo = document.getElementById('processed-video');
+
+        // 影片正在處理時，隱藏下載按鈕並顯示處理中訊息
+        processingMessage.style.display = 'block';
+        downloadButton.style.display = 'none';
+        // 禁用影片預覽
+        processedVideo.removeAttribute('controls');
+        
+        // 當影片載入完畢時，顯示下載按鈕並隱藏處理中訊息，並啟用影片預覽
+        processedVideo.addEventListener('loadeddata', () => {
+            processingMessage.style.display = 'none';
+            downloadButton.style.display = 'block';
+            // 啟用影片預覽
+            processedVideo.setAttribute('controls', true);
+        });
+    </script>
+</body>
+</html>
