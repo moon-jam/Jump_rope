@@ -15,11 +15,29 @@
             max-width: 100%;
             margin-top: 20px;
         }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Jump Rope League</h1>
+        <div class="header">
+            <h1>Jump Rope League</h1>
+            <div class="logout-button">
+                {% if 'user' in session %}
+                    <p>Welcome, {{ session['user'] }}!</p>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                {% endif %}
+            </div>
+        </div>
+
         <div class="form-container">
             <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" id="upload-form">
                 <div class="form-group">
@@ -71,6 +89,7 @@
 
         // 如果影片上傳後，按下上傳按鈕後顯示 Loading...
         uploadForm.addEventListener('submit', () => {
+            uploadButton.disabled = true;
             uploadButton.innerText = 'Uploading...';
         });
     </script>
