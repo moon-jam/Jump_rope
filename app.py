@@ -1,9 +1,14 @@
 import os
 import json  # 導入 json 模組
 from datetime import datetime
-from flask import Flask, request, render_template, send_file, redirect, url_for
+from flask import Flask, request, render_template, send_file, redirect, url_for, session
+import threading
+
+import vision_detect
+import auth
 
 app = Flask(__name__)
+app.secret_key = auth.app_secret_key
 
 # 設定上傳檔案和處理檔案的資料夾路徑
 UPLOAD_FOLDER = 'uploads'
@@ -11,20 +16,16 @@ PROCESSED_FOLDER = 'processed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
-# Helper function：處理影片的函式，接受輸入影片檔案路徑和輸出處理過後的影片檔案路徑
-def process_video(input_path, output_path):
-    # Implement your video processing here
-    # Example: video_processing_module.process(input_path, output_path)
-    pass
-
 def load_json(json_path):
     with open(json_path, 'r') as f:
         return json.load(f)
 
 @app.route('/')
 def index():
-    # 顯示首頁，其中包含上傳影片的表單
-    return render_template('index.html')
+    if 'user' in session:
+        return render_template('index.html')
+    else:
+        return render_template("login.html")
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -50,8 +51,9 @@ def upload():
     # 處理影片，並將處理過後的影片儲存到指定資料夾
     processed_filename = "processed_" + filename
     processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
-    process_video(video_path, processed_path)
+    process_thread = threading.Thread(target=vision_detect.process_video, args=(video_path, processed_path,))
 
+    process_thread.start()
     # 重新導向到下載頁面，並將處理過後的影片檔案名稱作為查詢參數
     return redirect(url_for('result_page', video=processed_filename))
 
@@ -123,6 +125,21 @@ def video_list():
     # 回傳 video_list.html 模板，並將影片列表資訊傳遞到模板中
     return render_template('video_list.html', video_list_info=video_list_info)
 
+@app.route('/login')
+def login():
+    return redirect(url_for('auth_google'))
+
+@app.route('/auth_google')
+def auth_google():
+    return auth.auth_google()
+
+@app.route('/callback')
+def callback():
+    return auth.callback()
+
+@app.route('/logout')
+def logout():
+    return auth.logout()
 
 if __name__ == '__main__':
     app.run(debug=True)
