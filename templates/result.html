@@ -3,10 +3,29 @@
 <head>
     <title>Jump Rope League</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Processing Result</h1>
+        <div class="header">
+            <h1>Processed Result</h1>
+            <div class="logout-button">
+                {% if 'user' in session %}
+                    <p>Welcome, {{ session['user'] }}!</p>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                {% endif %}
+            </div>
+        </div>
         <div class="text-center">
             <video id="processed-video" width="640" height="360" controls>
                 <source src="{{ url_for('download', video=video_name) }}" type="video/mp4">
