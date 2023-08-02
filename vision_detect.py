@@ -13,7 +13,6 @@ rope_model = YOLO(rope_model_path)
 motion_model = YOLO(motion_model_path)
 
 def process_video(input_path, output_path):
-    
     json_path = os.path.splitext(output_path)[0] + '.json'
 
     counter = 0
@@ -129,7 +128,7 @@ def process_video(input_path, output_path):
             break
     
     output = {"score": counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5,"times": counter,"rank": -1,\
-        "open_score": counterOpen,"cross_score": counterCross,"front_back": counterLFRB+counterRFLB}
+        "open_score": counterOpen,"cross_score": counterCross,"front_back": counterLFRB+counterRFLB,"gmail": "nobody"}
     with open(json_path, "w") as f:
         json.dump(output, f, indent = 4)
     

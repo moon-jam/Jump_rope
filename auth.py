@@ -50,6 +50,7 @@ def callback():
 
         # 儲存使用者資訊到 session
         session['user'] = id_token_response['name']
+        session['email'] = id_token_response['email']
         return redirect(url_for('index'))
     else:
         return '登入失敗'

@@ -6,10 +6,11 @@ import threading
 
 import vision_detect
 import auth
+import vid_User
+
 
 app = Flask(__name__)
 app.secret_key = auth.app_secret_key
-
 # 設定上傳檔案和處理檔案的資料夾路徑
 UPLOAD_FOLDER = 'uploads'
 PROCESSED_FOLDER = 'processed'
@@ -47,11 +48,12 @@ def upload():
     # 將使用者上傳的影片儲存到伺服器上的暫存位置
     video_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     video_file.save(video_path)
-
+    vid_User.write(filename,session['email'])
+    
     # 處理影片，並將處理過後的影片儲存到指定資料夾
     processed_filename = "processed_" + filename
     processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
-    process_thread = threading.Thread(target=vision_detect.process_video, args=(video_path, processed_path,))
+    process_thread = threading.Thread(target=vision_detect.process_video, args=(video_path, processed_path))
 
     process_thread.start()
     # 重新導向到下載頁面，並將處理過後的影片檔案名稱作為查詢參數
@@ -88,8 +90,14 @@ def video_list():
     processed_videos = os.listdir(app.config['PROCESSED_FOLDER'])
 
     video_list_info = []
+    vid_user = []
+    with open('vid_User.json') as f:
+        vid_user = json.load(f)
 
     for video in uploaded_videos:
+        if vid_user[video] != session['email']:
+            continue
+        
         processed_filename = 'processed_' + video
         filename = os.path.splitext(video)[0]
         json_filename = 'processed_' + filename + '.json'
