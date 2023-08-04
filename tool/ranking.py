@@ -16,11 +16,11 @@ def re_rank():
         json.dump(sorted_content, f_new)
 
 def write(file, score):
-    with open("data/vid_User.json", 'r') as f:
+    with open("data/ranking.json", 'r') as f:
         content = json.load(f)
     input = {file:[{"score":score, "ranking":0}]}
     content.update(input)
-    with open("data/vid_User.json", 'w') as f_new:
+    with open("data/ranking.json", 'w') as f_new:
         json.dump(content, f_new)
     re_rank()
 
