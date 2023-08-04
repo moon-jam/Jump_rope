@@ -7,6 +7,8 @@ import cv2
 from PIL import Image
 import numpy as np
 import os
+import tool.ranking as ranking
+
 rope_model_path ='./model/rope_model.pt'
 motion_model_path ='./model/motion_model.pt'
 rope_model = YOLO(rope_model_path)
@@ -127,8 +129,9 @@ def process_video(input_path, output_path):
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
             break
     
-    output = {"score": counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5,"times": counter,"rank": -1,\
-        "open_score": counterOpen,"cross_score": counterCross,"front_back": counterLFRB+counterRFLB,"gmail": "nobody"}
+    score = counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5
+    output = {"score": score,"times": counter,"rank": -1,"open_score": counterOpen,\
+        "cross_score": counterCross,"front_back": counterLFRB+counterRFLB,"gmail": "nobody"}
     with open(json_path, "w") as f:
         json.dump(output, f, indent = 4)
     
@@ -136,6 +139,9 @@ def process_video(input_path, output_path):
     out.release()
     cv2.destroyAllWindows()
     print("The video was successfully saved")
+    
+    filename = os.path.splitext(os.path.basename(input_path))[0]
+    ranking.write(filename, score)
 
 if __name__ == '__main__':
     process_video('./test_vid/test30s.mp4', './test_vid/output.mp4')
