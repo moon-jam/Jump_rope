@@ -7,7 +7,7 @@ import cv2
 from PIL import Image
 import numpy as np
 import os
-import tool.ranking as ranking
+import ranking
 
 rope_model_path ='./model/rope_model.pt'
 motion_model_path ='./model/motion_model.pt'
@@ -144,5 +144,5 @@ def process_video(input_path, output_path):
     ranking.write(filename, score)
 
 if __name__ == '__main__':
-    process_video('./test_vid/test30s.mp4', './test_vid/output.mp4')
+    process_video('./test_vid/teee.mp4', './test_vid/output.mp4')
     
