@@ -4,10 +4,9 @@ from datetime import datetime
 from flask import Flask, request, render_template, send_file, redirect, url_for, session
 import threading
 
-import vision_detect
-import auth
-import vid_User
-
+import tool.vision_detect as vision_detect
+import tool.auth as auth
+import tool.vid_User as vid_User
 
 app = Flask(__name__)
 app.secret_key = auth.app_secret_key
