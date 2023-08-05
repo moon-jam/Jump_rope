@@ -7,6 +7,7 @@ import threading
 import tool.vision_detect as vision_detect
 import tool.auth as auth
 import tool.vid_User as vid_User
+import tool.mail_User as mail_User
 
 app = Flask(__name__)
 app.secret_key = auth.app_secret_key
@@ -23,8 +24,11 @@ def load_json(json_path):
 @app.route('/')
 def index():
     if 'user' in session:
+        print("hello1")
+        mail_User.write(session['email'],session['user'])
         return render_template('index.html')
     else:
+        print("hello2")
         return render_template("login.html")
 
 @app.route('/upload', methods=['POST'])

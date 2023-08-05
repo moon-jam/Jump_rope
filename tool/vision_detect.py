@@ -7,7 +7,11 @@ import cv2
 from PIL import Image
 import numpy as np
 import os
-import ranking
+
+try:
+    import ranking
+except:
+    import tool.ranking as ranking
 
 rope_model_path ='./model/rope_model.pt'
 motion_model_path ='./model/motion_model.pt'

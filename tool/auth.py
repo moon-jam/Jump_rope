@@ -13,11 +13,14 @@ CLIENT_ID = '113846323534-kl9ij7fdt9shqtviev1uej3rf61r7f8o.apps.googleuserconten
 CLIENT_SECRET = "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"
 
 if __name__ == '__main__':
+    app = Flask(__name__, template_folder="../templates")
     @app.route('/')
     def index():
         if 'user' in session:
+            print("hello2")
             return f'歡迎，{session["user"]}！<br><a href="/logout">登出</a>'
         else:
+            print("hello1")
             return render_template("login.html")
 
 @app.route('/login')

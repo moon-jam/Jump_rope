@@ -1,6 +1,6 @@
 import json
 
-def write(file, gmail):
+def write(file, gmail, name):
     with open("data/vid_User.json", 'r') as f:
         content = json.load(f)
     input = {file:gmail}
