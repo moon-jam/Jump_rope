@@ -22,12 +22,17 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
         .logout-button {
             position: absolute;
             top: 20px;
             right: 20px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
         }
     </style>
 </head>
@@ -40,6 +45,10 @@
                     <p>Welcome, {{ session['user'] }}!</p>
                     <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
                 {% endif %}
+            </div>
+            <div class="home-button">
+                <a href="/" class="btn btn-primary">Back to Home</a>
+                <a href="{{ url_for('ranking') }}" class="btn btn-primary">Ranking</a>
             </div>
         </div>
         <table class="table table-bordered">
@@ -64,12 +73,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-
-    <div class="text-center">
-        <div class="mt-3">
-            <a href="/" class="btn btn-primary">Back to Home</a>
-        </div>
     </div>
 </body>
 </html>

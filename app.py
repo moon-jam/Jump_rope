@@ -8,6 +8,7 @@ import tool.vision_detect as vision_detect
 import tool.auth as auth
 import tool.vid_User as vid_User
 import tool.mail_User as mail_User
+import tool.ranking as _ranking
 
 app = Flask(__name__)
 app.secret_key = auth.app_secret_key
@@ -17,9 +18,11 @@ PROCESSED_FOLDER = 'processed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
-def load_json(json_path):
-    with open(json_path, 'r') as f:
-        return json.load(f)
+gpu_lock = threading.Lock()
+
+def process_video(input_path, output_path):
+    with gpu_lock:
+        vision_detect.process_video(input_path, output_path)
 
 @app.route('/')
 def index():
@@ -56,8 +59,8 @@ def upload():
     # 處理影片，並將處理過後的影片儲存到指定資料夾
     processed_filename = "processed_" + filename
     processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
-    process_thread = threading.Thread(target=vision_detect.process_video, args=(video_path, processed_path))
-
+    process_thread = threading.Thread(target=process_video, args=(video_path, processed_path))
+    
     process_thread.start()
     # 重新導向到下載頁面，並將處理過後的影片檔案名稱作為查詢參數
     return redirect(url_for('result_page', video=processed_filename))
@@ -94,7 +97,7 @@ def video_list():
 
     video_list_info = []
     vid_user = []
-    with open('vid_User.json') as f:
+    with open('./data/vid_User.json') as f: 
         vid_user = json.load(f)
 
     for video in uploaded_videos:
@@ -112,6 +115,9 @@ def video_list():
         formatted_upload_time = upload_time.strftime('%Y-%m-%d %H:%M:%S')  # 格式化成 'yyyy-mm-dd HH:MM'
         
         if json_filename in processed_videos:
+            
+            rank = _ranking.get_ranking(filename)
+            
             json_path = os.path.join(app.config['PROCESSED_FOLDER'], json_filename)
             with open(json_path, 'r') as f:
                 video_info = json.load(f)
@@ -120,7 +126,7 @@ def video_list():
                     'upload_time': formatted_upload_time,
                     'times': video_info['times'],
                     'score': video_info['score'],
-                    'rank': video_info['rank'],
+                    'rank': rank,
                     'full_filename': video
                 })
         else:
@@ -151,6 +157,21 @@ def callback():
 @app.route('/logout')
 def logout():
     return auth.logout()
+
+@app.route('/ranking')
+def ranking():
+    
+    # 讀取排名資料、使用者對應影片資料和使用者對應名稱資料
+    with open('data/ranking.json', 'r') as f:
+        ranking_data = json.load(f)
+
+    with open('data/vid_User.json', 'r') as f:
+        vid_User_data = json.load(f)
+
+    with open('data/mail_name.json', 'r') as f:
+        mail_name_data = json.load(f)
+    
+    return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

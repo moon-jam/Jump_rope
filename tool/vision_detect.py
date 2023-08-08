@@ -19,6 +19,7 @@ rope_model = YOLO(rope_model_path)
 motion_model = YOLO(motion_model_path)
 
 def process_video(input_path, output_path):
+    
     json_path = os.path.splitext(output_path)[0] + '.json'
 
     counter = 0
@@ -128,13 +129,18 @@ def process_video(input_path, output_path):
             
             if __name__ == '__main__' or cv2.waitKey(1) == ord('v'):
                 cv2.imshow('video', frame)
+            cv2.imshow('video', frame)
         else:
             break
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
             break
     
     score = counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5
-    output = {"score": score,"times": counter,"rank": -1,"open_score": counterOpen,\
+    
+    filename = os.path.splitext(os.path.basename(input_path))[0]
+    rank = ranking.write(filename, score)
+    
+    output = {"score": score,"times": counter,"open_score": counterOpen,\
         "cross_score": counterCross,"front_back": counterLFRB+counterRFLB,"gmail": "nobody"}
     with open(json_path, "w") as f:
         json.dump(output, f, indent = 4)
@@ -144,9 +150,7 @@ def process_video(input_path, output_path):
     cv2.destroyAllWindows()
     print("The video was successfully saved")
     
-    filename = os.path.splitext(os.path.basename(input_path))[0]
-    ranking.write(filename, score)
 
 if __name__ == '__main__':
-    process_video('./test_vid/teee.mp4', './test_vid/output.mp4')
+    process_video('./test_vid/test0.mp4', './test_vid/output.mp4')
     
