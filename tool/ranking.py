@@ -1,10 +1,6 @@
 import json
 
-def re_rank():
-    with open("data/ranking.json", 'r') as f:
-        content = json.load(f)
-
-    # Rank
+def re_rank(content):
     sorted_content = {}
     sorted_filenames = sorted(content.keys(), key=lambda x: content[x][0]["score"], reverse=True)
 
@@ -18,11 +14,19 @@ def re_rank():
 def write(file, score):
     with open("data/ranking.json", 'r') as f:
         content = json.load(f)
-    input = {file:[{"score":score, "ranking":0}]}
-    content.update(input)
-    with open("data/ranking.json", 'w') as f_new:
-        json.dump(content, f_new)
-    re_rank()
+    input_data = {file: [{"score": score, "ranking": 0}]}
+    content.update(input_data)
+    re_rank(content)
+    rank = content[file][0]["ranking"]
+    return rank
+
+def get_ranking(file):
+    with open("data/ranking.json", 'r') as f:
+        content = json.load(f)
+    rank = content[file][0]["ranking"]
+    return rank
 
 if __name__ == '__main__':
-    re_rank()
+    with open("data/ranking.json", 'r') as f:
+        content = json.load(f)
+    re_rank(content)
