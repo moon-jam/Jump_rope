@@ -27,11 +27,11 @@ def process_video(input_path, output_path):
 @app.route('/')
 def index():
     if 'user' in session:
-        print("hello1")
+        # print("hello1")
         mail_User.write(session['email'],session['user'])
         return render_template('index.html')
     else:
-        print("hello2")
+        # print("hello2")
         return render_template("login.html")
 
 @app.route('/upload', methods=['POST'])
