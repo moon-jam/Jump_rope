@@ -1,11 +1,8 @@
-import torch
 from ultralytics import YOLO
 from cvzone.PoseModule import PoseDetector
 import time
 import json
 import cv2
-from PIL import Image
-import numpy as np
 import os
 
 try:
@@ -129,7 +126,7 @@ def process_video(input_path, output_path):
             
             if __name__ == '__main__' or cv2.waitKey(1) == ord('v'):
                 cv2.imshow('video', frame)
-            cv2.imshow('video', frame)
+            # cv2.imshow('video', frame)
         else:
             break
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
