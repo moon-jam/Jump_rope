@@ -1,20 +1,19 @@
-# 使用一個基本的 Python 映像作為基底
-FROM python:3.8-slim
+# 使用官方的 Python 基礎映像
+FROM python:3.9
+# FROM jump_rope_web
 
-# 設定環境變數
-ENV FLASK_APP=app.py
-
-# 在容器內建立一個目錄來儲存你的專案
-WORKDIR /app
-
-# 複製專案檔案到容器內
+# 將專案中的所有檔案複製到容器中的 /app 目錄
 COPY . /app
 
-# 安裝相依套件
-RUN pip install --no-cache-dir -r requirements.txt
+# 設定工作目錄
+WORKDIR /app
 
-# 開放指定的埠號
-EXPOSE 8000
+RUN apt-get update
+RUN apt-get install -y libgl1-mesa-glx
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+RUN pip install gevent gunicorn
+RUN pip install mediapipe
 
-# 執行 Gunicorn 伺服器
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+# 定義容器啟動時要運行的命令
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
