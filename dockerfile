@@ -1,6 +1,6 @@
 # 使用官方的 Python 基礎映像
-FROM python:3.9
-# FROM jump_rope_web
+# FROM python:3.9
+FROM panda0322/jump_rope_web
 
 # 將專案中的所有檔案複製到容器中的 /app 目錄
 COPY . /app
