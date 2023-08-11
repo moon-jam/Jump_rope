@@ -29,16 +29,17 @@ def login():
 
 @app.route('/auth_google')
 def auth_google():
-    return redirect(f'https://accounts.google.com/o/oauth2/auth?response_type=code&client_id={CLIENT_ID}&redirect_uri=http://localhost:5000/callback&scope=openid%20email%20profile')
+    return redirect(f'https://accounts.google.com/o/oauth2/auth?response_type=code&client_id={CLIENT_ID}&redirect_uri='+request.url_root+'callback&scope=openid%20email%20profile')
 
 @app.route('/callback')
 def callback():
+    print(request.url_root+'callback')
     code = request.args.get('code')
     token_response = requests.post('https://oauth2.googleapis.com/token', data={
         'code': code,
         'client_id': CLIENT_ID,
         'client_secret': CLIENT_SECRET,
-        'redirect_uri': 'http://localhost:5000/callback',
+        'redirect_uri': request.url_root+'callback',
         'grant_type': 'authorization_code',
     })
 
