@@ -1,6 +1,6 @@
 # 使用官方的 Python 基礎映像
-# FROM python:3.9
-FROM panda0322/jump_rope_web
+FROM python:3.11.4
+# FROM panda0322/jump_rope_web
 
 # 將專案中的所有檔案複製到容器中的 /app 目錄
 COPY . /app
@@ -16,4 +16,4 @@ RUN pip install gevent gunicorn
 RUN pip install mediapipe
 
 # 定義容器啟動時要運行的命令
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000", "-t", "86400"]

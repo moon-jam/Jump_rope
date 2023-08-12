@@ -4,7 +4,7 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
 
-app_secret_key = '61e975d0d1bc843e2b4cb9e435ec47627cb6359993390602e003b220d7e82901'
+app_secret_key = 'b700fe70d5d732756fe1c74774d51b03531f294db364eec7874bd07c5d003e373aab2c0b8a9836a6f5e2e79e6e1139feb7cd783cb451ea9f088dec46eb1dd42ce971c7f3bfaa3353da'
 
 app = Flask(__name__)
 app.secret_key = app_secret_key
