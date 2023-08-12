@@ -11,7 +11,7 @@ import tool.mail_User as mail_User
 import tool.ranking as _ranking
 
 app = Flask(__name__)
-app.secret_key = '61e975d0d1bc843e2b4cb9e435ec47627cb6359993390602e003b220d7e82901'
+app.secret_key = '***REMOVED***'
 # 設定上傳檔案和處理檔案的資料夾路徑
 UPLOAD_FOLDER = 'uploads'
 PROCESSED_FOLDER = 'processed'
@@ -174,4 +174,5 @@ def ranking():
     return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
+    

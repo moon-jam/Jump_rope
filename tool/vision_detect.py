@@ -45,7 +45,7 @@ def process_video(input_path, output_path):
     # a frame of above defined The output 
     # is stored in 'filename.avi' file.
     out = cv2.VideoWriter(output_path, 
-                            cv2.VideoWriter_fourcc(*'avc1'),
+                            cv2.VideoWriter_fourcc(*'mp4v'),
                             input_fps, size)
     
     while True:
