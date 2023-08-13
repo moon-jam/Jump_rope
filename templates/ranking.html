@@ -53,19 +53,23 @@
             </thead>
             <tbody>
                 {% for filename, info in ranking.items() %}
-                    {% set email = vid_User[filename+'.mp4'] %}
-                    {% set user_name = mail_name[email] %}
-                    {% set date = filename[:8] %}
-                    {% set formatted_date = date[:4] + '/' + date[4:6] + '/' + date[6:] %}
-                    {% set score = info[0]['score'] %}
-                    {% set rank = info[0]['ranking'] %}
-                    <tr onclick="window.location.href='{{ url_for('result_page', video='processed_' + filename + '.mp4') }}';">
-                        <td>{{ user_name }}</td>
-                        <td>{{ email }}</td>
-                        <td>{{ formatted_date }}</td>
-                        <td>{{ score }}</td>
-                        <td>{{ rank }}</td>
-                    </tr>
+                    {% for format in formats %}
+                        {% set email = vid_User[filename+format] %}
+                        {% if email is defined %}
+                            {% set user_name = mail_name[email] %}
+                            {% set date = filename[:8] %}
+                            {% set formatted_date = date[:4] + '/' + date[4:6] + '/' + date[6:] %}
+                            {% set score = info[0]['score'] %}
+                            {% set rank = info[0]['ranking'] %}
+                            <tr onclick="window.location.href='{{ url_for('result_page', video='processed_' + filename + format) }}';">
+                                <td>{{ user_name }}</td>
+                                <td>{{ email }}</td>
+                                <td>{{ formatted_date }}</td>
+                                <td>{{ score }}</td>
+                                <td>{{ rank }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             </tbody>
         </table>

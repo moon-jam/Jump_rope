@@ -10,6 +10,7 @@ WORKDIR /app
 
 RUN apt-get update
 RUN apt-get install -y libgl1-mesa-glx
+RUN apt-get install -y ffmpeg
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install gevent gunicorn

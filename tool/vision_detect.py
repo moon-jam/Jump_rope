@@ -18,7 +18,9 @@ motion_model = YOLO(motion_model_path)
 def process_video(input_path, output_path):
     
     json_path = os.path.splitext(output_path)[0] + '.json'
-
+    tmp_name = os.path.splitext(output_path)[0][10:34]+'.mp4'
+    print("\n\n\ntmp:"+tmp_name) 
+    
     counter = 0
     counterOpen = 0
     counterCross = 0
@@ -44,7 +46,7 @@ def process_video(input_path, output_path):
     # Below VideoWriter object will create
     # a frame of above defined The output 
     # is stored in 'filename.avi' file.
-    out = cv2.VideoWriter(output_path, 
+    out = cv2.VideoWriter('processed/'+tmp_name, 
                             cv2.VideoWriter_fourcc(*'mp4v'),
                             input_fps, size)
     
@@ -145,6 +147,9 @@ def process_video(input_path, output_path):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    os.system("ffmpeg -i processed/"+tmp_name+" -vcodec libx264 -f mp4 processed/out.mp4")
+    os.remove("processed/"+tmp_name)
+    os.rename("processed/out.mp4",output_path)
     print("The video was successfully saved")
     
 
