@@ -3,6 +3,7 @@ import json  # 導入 json 模組
 from datetime import datetime
 from flask import Flask, request, render_template, send_file, redirect, url_for, session
 import threading
+import logging
 
 import tool.vision_detect as vision_detect
 import tool.auth as auth
@@ -21,8 +22,13 @@ app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 gpu_lock = threading.Lock()
 
 def process_video(input_path, output_path):
-    with gpu_lock:
-        vision_detect.process_video(input_path, output_path)
+    if gpu_lock.acquire(timeout=3600):  # 最多等待 1hr 來獲取 Lock
+        try:
+            vision_detect.process_video(input_path, output_path)
+        finally:
+            gpu_lock.release()
+    else:
+        logging.warning(input_path+"Timeout while waiting to acquire GPU lock.")
 
 @app.route('/')
 def index():
@@ -108,8 +114,8 @@ def video_list():
         filename = os.path.splitext(video)[0]
         json_filename = 'processed_' + filename + '.json'
         
-        time_str = filename.split("_")[0]
-        name_str = filename.split("_")[1]
+        time_str = filename[:14]
+        name_str = filename[15:]
         
         upload_time = datetime.strptime(time_str, '%Y%m%d%H%M%S')  # 轉換成 datetime 物件
         formatted_upload_time = upload_time.strftime('%Y-%m-%d %H:%M:%S')  # 格式化成 'yyyy-mm-dd HH:MM'
@@ -171,8 +177,10 @@ def ranking():
     with open('data/mail_name.json', 'r') as f:
         mail_name_data = json.load(f)
     
-    return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data)
+    video_file_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.wmv', '.m4v']
+    
+    return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data, formats=video_file_formats)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(host='0.0.0.0', debug=False, port=443)
     
