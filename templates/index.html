@@ -59,13 +59,16 @@
         <div class="form-container">
             <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" id="upload-form">
                 <div class="form-group">
-                    <input type="file" name="video" class="form-control-file" id="video-input" accept="video/*" capture="user">
+                    <input type="file" name="video" class="form-control-file" id="video-input" accept="video/*">
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary" id="upload-button" disabled>Upload Video</button>
+                    <p id="upload-error-message" class="text-danger d-none">Video length must be between 30 seconds and 1 minute.</p>
                 </div>
             </form>
         </div>
+        
+
         <div id="video-preview-container" class="text-center d-none">
             <video id="video-preview" width="640" height="360" controls>
                 Your browser does not support the video tag.
@@ -96,6 +99,22 @@
 
                 // 啟用按鈕
                 uploadButton.disabled = false;
+
+                // 讀取影片長度
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.src = videoURL;
+                video.onloadedmetadata = () => {
+                    const duration = video.duration;
+                    if (duration < 30 || duration > 60) {
+                        // 影片長度不在範圍內，顯示錯誤訊息並禁用按鈕
+                        document.getElementById('upload-error-message').classList.remove('d-none');
+                        uploadButton.disabled = true;
+                    } else {
+                        // 影片長度符合範圍，隱藏錯誤訊息
+                        document.getElementById('upload-error-message').classList.add('d-none');
+                    }
+                };
             } else {
                 // 隱藏影片預覽區塊
                 videoPreviewContainer.classList.add('d-none');
