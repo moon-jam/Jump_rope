@@ -2,7 +2,7 @@
   "score": 100,
   "times": 100,
   "rank": 1,
-  "open_score": 50,
-  "cross_score": 50,
-  "front_back": 50
+  "open_times": 50,
+  "cross_times": 50,
+  "magic_cross_times": 50
 }

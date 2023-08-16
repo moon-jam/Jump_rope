@@ -130,7 +130,9 @@ def video_list():
                 video_list_info.append({
                     'video_name': name_str,
                     'upload_time': formatted_upload_time,
-                    'times': video_info['times'],
+                    'open_times': video_info['open_times'],
+                    'cross_times': video_info['cross_times'],
+                    'magic_cross_times': video_info['magic_cross_times'],
                     'score': video_info['score'],
                     'rank': rank,
                     'full_filename': video
@@ -139,7 +141,9 @@ def video_list():
             video_list_info.append({
                 'video_name': name_str,
                 'upload_time': formatted_upload_time,
-                'times': 'Processing...',
+                'open_times': 'Processing...',
+                'cross_times': 'Processing...',
+                'magic_cross_times': 'Processing...',
                 'score': 'Processing...',
                 'rank': 'Processing...',
                 'full_filename': video

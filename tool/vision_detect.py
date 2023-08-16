@@ -139,8 +139,8 @@ def process_video(input_path, output_path):
     filename = os.path.splitext(os.path.basename(input_path))[0]
     rank = ranking.write(filename, score)
     
-    output = {"score": score,"times": counter,"open_score": counterOpen,\
-        "cross_score": counterCross,"front_back": counterLFRB+counterRFLB,"gmail": "nobody"}
+    output = {"score": score,"times": counter,"open_times": counterOpen,\
+        "cross_times": counterCross,"magic_cross_times": counterLFRB+counterRFLB}
     with open(json_path, "w") as f:
         json.dump(output, f, indent = 4)
     
