@@ -1,7 +1,7 @@
 import os
 import json  # 導入 json 模組
 from datetime import datetime
-from flask import Flask, request, render_template, send_file, redirect, url_for, session
+from flask import Flask, request, render_template, send_file, redirect, url_for, session, send_from_directory
 import threading
 import logging
 
@@ -184,6 +184,14 @@ def ranking():
     video_file_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.wmv', '.m4v']
     
     return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data, formats=video_file_formats)
+
+@app.route('/rule')
+def rule():
+    return render_template("rule.html")
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5000) #, ssl_context=('server.csr', 'server.key'))
