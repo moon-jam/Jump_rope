@@ -41,6 +41,8 @@ def process_video(input_path, output_path):
     print(input_path)
 
     input_fps = int(cap.get(cv2.CAP_PROP_FPS))
+    duration = cap.get(cv2.CAP_PROP_FRAME_COUNT)/cap.get(cv2.CAP_PROP_FPS)
+    print("\n\n\nduration:"+str(duration))
     size = (720, 1080)
     
     # Below VideoWriter object will create
@@ -134,7 +136,7 @@ def process_video(input_path, output_path):
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
             break
     
-    score = counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5
+    score = round((counterOpen*2+counterCross*3+(counterLFRB+counterRFLB)*5)/duration*30)
     
     filename = os.path.splitext(os.path.basename(input_path))[0]
     rank = ranking.write(filename, score)
