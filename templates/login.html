@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Login</title>
+        <title>Jump Rope League</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/switch.css') }}" />
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -20,20 +17,43 @@
                 top: 20px;
                 left: 20px;
             }
+            .login-button {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            .header {
+                position: absolute;
+                top: 40px;
+                left: 50%;
+                transform: translate(-50%, -30%);
+                margin-bottom: 40px;
+            }
+            .video {
+                position: absolute;
+                top: 10%;
+                left: 50%;
+                transform: translate(-50%, 0%);
+                margin-bottom: 40px;
+            }
+            
         </style>
     </head>
-    <div class = "fixed-bottom ml-3 mb-3">
-        <script type="text/javascript"> //<![CDATA[
-                var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
-                document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
-                //]]></script>
-                <script language="JavaScript" type="text/javascript">
-                        TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png", "POSDV", "none");
-                </script>
-        </script>
-    </div>
     <body>
-        <div class="container d-flex justify-content-center align-items-center">
+        <div class = "fixed-bottom ml-3 mb-3">
+            <script type="text/javascript"> //<![CDATA[
+                    var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+                    document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+                    //]]></script>
+                    <script language="JavaScript" type="text/javascript">
+                            TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png", "POSDV", "none");
+                    </script>
+            </script>
+        </div>
+        <div class="container">
+            <div class="header">
+                <h1>Jump Rope League</h1>
+            </div>
             <div class="home-button">
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="lightSwitch"/>
@@ -44,7 +64,16 @@
                     </label>
                 </div>
             </div>
-            <a class="btn btn-primary align-middle" href="/login">Sign in with Google</a>
+            <div class="login-button">
+                <a class="btn btn-primary align-middle" href="/login">Sign in with Google</a>
+            </div>
+            <div class="video mt-5">
+                <div class="container">
+                    <iframe width="960" height="540" src="https://www.youtube.com/embed/oqZAJrscZW8" frameborder="0" allowfullscreen></iframe>  
+                    <p></p>    
+                    <a class="btn btn-primary d-flex justify-content-center" href="/login">Sign in with Google</a>
+                </div>  
+            </div>  
         </div>
     </body>
     <script src="{{ url_for('static', filename='js/switch.js') }}"></script>
