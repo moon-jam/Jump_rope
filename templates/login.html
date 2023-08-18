@@ -73,7 +73,7 @@
             <a class="bottom_btn btn btn-primary d-flex justify-content-center" href="/login">Sign in with Google</a>
 
             <div class="home-button">
-                <div class="form-check form-switch">
+                <div class="form-check form-switch ms-3 mt-5 me-5">
                     <input class="form-check-input" type="checkbox" id="lightSwitch"/>
                     <label class="form-check-label ms-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
@@ -81,6 +81,10 @@
                         </svg>
                     </label>
                 </div>
+            </div>
+            <div class="home-button">
+                <a href="{{ url_for('ranking') }}" class="btn btn-primary">Ranking</a>
+                <a href="{{ url_for('rule') }}" class="btn btn-primary">Rule</a>
             </div>
             <div class="login-button">
                 <a class="btn btn-primary align-middle" href="/login">Sign in with Google</a>

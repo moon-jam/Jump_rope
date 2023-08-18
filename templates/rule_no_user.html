@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Rule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/switch.css') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        .table-hover tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<!--
+<div class = "fixed-bottom ml-3 mb-3">
+    <script type="text/javascript"> //<![CDATA[
+        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+        //]]></script>
+        <script language="JavaScript" type="text/javascript">
+            TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png", "POSDV", "none");
+        </script>
+    </script>
+</div>
+//-->
+<body>
+    <div class="container mt-4">
+        <div class="header">
+            <h1>Rule</h1>
+            <div class="login-button">
+                <a class="bottom_btn btn btn-primary d-flex justify-content-center" href="/login">Sign in with Google</a>
+            </div>
+            <div class="home-button">
+                <div class="form-check form-switch ms-3 mt-5 me-5">
+                    <input class="form-check-input" type="checkbox" id="lightSwitch"/>
+                    <label class="form-check-label ms-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
+                            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+            <div class="home-button">
+                <a href="/" class="btn btn-primary">Back to Home</a>
+                <a href="{{ url_for('ranking') }}" class="btn btn-primary">Ranking</a>
+            </div>
+        </div>
+        
+        <h2>Upload Video Format:</h2>
+        <p>Accepted formats: '.mp4', '.avi', '.mov', '.mkv', '.webm', '.wmv', '.m4v'</p>
+        <p>Video length should be between 30 seconds and 1 minute.</p>
+        
+        <h2>Scoring Rules:</h2>
+        <p>open 2 points, cross 3 points, magic cross 5 points.</p>
+        <p>The final score will be calculated as the rounded result of</p>
+        <p>((2 * open_count + 3 * cross_count + 5 * magic_cross_count) / video_length) * 30</p>
+        <p>Example: If a person performs 30 open jumps, 20 cross jumps, and 10 magic cross jumps within 40 seconds, the final score will be</p>
+        <p>((2 * 30 + 3 * 20 + 5 * 10) / 40) * 30 = 127.5 ≈ 128.</p>
+        <p>To maximize your score, it is recommended to edit your video and remove any periods without jumping.</p>
+        
+        <h2>Jump Rope Tricks Demonstrations:</h2>
+        <p>Watch the demonstration video below:</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/your_youtube_video_id" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <script src="{{ url_for('static', filename='js/switch.js') }}"></script>
+</body>
+</html>
