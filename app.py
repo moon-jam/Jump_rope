@@ -183,11 +183,18 @@ def ranking():
     
     video_file_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.wmv', '.m4v']
     
-    return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data, formats=video_file_formats)
+    if 'user' in session:
+        return render_template('ranking.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data, formats=video_file_formats)
+    else:
+        return render_template('ranking_no_user.html', ranking=ranking_data, vid_User=vid_User_data, mail_name=mail_name_data, formats=video_file_formats)
 
 @app.route('/rule')
 def rule():
-    return render_template("rule.html")
+    if 'user' in session:
+        return render_template("rule.html")
+    else:
+        return render_template("rule_no_user.html")
+    
 
 @app.route('/favicon.ico')
 def favicon():
