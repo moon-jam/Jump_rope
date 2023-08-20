@@ -43,7 +43,7 @@ def process_video(input_path, output_path):
     input_fps = int(cap.get(cv2.CAP_PROP_FPS))
     duration = cap.get(cv2.CAP_PROP_FRAME_COUNT)/cap.get(cv2.CAP_PROP_FPS)
     print("\n\n\nduration:"+str(duration))
-    size = (720, 1080)
+    size = (720, 1280)
     
     # Below VideoWriter object will create
     # a frame of above defined The output 
@@ -56,6 +56,7 @@ def process_video(input_path, output_path):
         ret, frame = cap.read()
         if ret:
             # frame = cv2.rotate(frame, cv2.ROTATE_180)
+            frame = cv2.resize(frame,(1080,1920))
             rope_results = rope_model(frame)
             frame = rope_results[0].plot()
             motion_results = motion_model(frame)
@@ -125,7 +126,7 @@ def process_video(input_path, output_path):
             fps = 1 / (cTime - pTime)
             pTime = cTime
             cv2.putText(frame, f"FPS : {int(fps)}", (930, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 3)
-            frame = cv2.resize(frame, (720, 1080), interpolation=cv2.INTER_CUBIC)
+            frame = cv2.resize(frame, size, interpolation=cv2.INTER_CUBIC)
             out.write(frame)
             
             if __name__ == '__main__' or cv2.waitKey(1) == ord('v'):
