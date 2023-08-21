@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            padding: 70px;
+            padding-top: 70px;
         }
         .header {
             text-align: center;
@@ -28,6 +28,10 @@
             top: 20px;
             left: 20px;
         }
+        #processed-video {
+            max-width: 100%;
+            height: auto;
+          }
     </style>
 </head>
 <!--
@@ -70,20 +74,24 @@
                         </div>
                     </li>
                 </ul>
-                <div class="navbar-text welcome-message">
-                    Welcome, {{ session['user'] }}!
-                </div>
-                <div class="navbar-text">
-                    
-                </div>
-                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                {% if 'user' in session %}
+                    <div class="d-flex ">
+                        <div class="navbar-text welcome-message">
+                            Welcome, {{ session['user'] }}!
+                        </div>
+                        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                    </div>
+                {% else %}
+                <a class="btn btn-primary" href="/login">Sign in with Google <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                {% endif %}
+                
                 
             </div>
         </div>
     </nav>
     <div class="container">
         <div class="text-center">
-            <video id="processed-video" width="60%" controls>
+            <video id="processed-video" controls>
                 <source src="{{ url_for('download', video=video_name) }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -120,6 +128,17 @@
             // 啟用影片預覽
             processedVideo.setAttribute('controls', true);
         });
+        function adjustVideoSize() {
+            var video = document.getElementById("processed-video");
+            var windowHeight = window.innerHeight;
+            var videoHeight = windowHeight * 0.5; // 30% of window height
+          
+            video.style.height = videoHeight + "px";
+          }
+          
+          // Call the function initially and whenever the window is resized
+          adjustVideoSize();
+          window.addEventListener("resize", adjustVideoSize);
     </script>
     <script src="{{ url_for('static', filename='js/switch.js') }}"></script>
 </body>

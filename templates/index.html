@@ -13,29 +13,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            padding: 70px;
+            padding-top: 70px;
         }
         .form-container {
-            max-width: 400px;
+            text-align: center;
             margin: 0 auto;
         }
         #video-preview {
             max-width: 100%;
             margin-top: 20px;
         }
-        .header {
+        h2 {
             text-align: center;
-            margin-bottom: 40px;
         }
-        .logout-button {
+        .text-container {
             position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .home-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            left: 7.5%;
+            width: 85%; /* 調整為您想要的寬度百分比 */
         }
     </style>
 </head>
@@ -79,19 +73,28 @@
                         </div>
                     </li>
                 </ul>
-                <div class="navbar-text welcome-message">
-                    Welcome, {{ session['user'] }}!
+                
+                <div class="d-flex ">
+                    <div class="navbar-text welcome-message">
+                        Welcome, {{ session['user'] }}!
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 </div>
-                <div class="navbar-text">
-                    
-                </div>
-                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
                 
             </div>
         </div>
     </nav>
     <div class="container">
-        <div class="form-container">
+        <div class="text-container">
+            <h2>How to Get Started</h2>
+            <ol>
+                <li>Sign in with your Google account by clicking the "Sign in with Google" button above.</li>
+                <li>Once signed in, you can upload your jump rope videos to participate in the league.</li>
+                <li>After uploading, our system will analyze your video and provide you with a score and ranking.</li>
+                <li>Explore the ranking list to see where you stand among other jump rope enthusiasts.</li>
+            </ol>
+        </dv>
+        <div class="form-container mt-3">
             <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" id="upload-form">
                 <div class="form-group">
                     <input type="file" name="video" class="form-control-file" id="video-input" accept="video/*">
