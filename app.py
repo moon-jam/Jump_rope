@@ -203,6 +203,10 @@ def page_not_found(e):
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.static_folder, request.path[1:])
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5000) #, ssl_context=('server.csr', 'server.key'))
     

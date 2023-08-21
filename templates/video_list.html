@@ -13,11 +13,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            padding: 70px;
+            padding-top: 70px;
         }
-        table {
+        .table-container {
+            width: 100%; /* 表格寬度為100% */
+            margin: 0;   /* 移除外邊距 */
+            padding: 20;  /* 移除內邊距 */
+        }
+        .table {
             width: 100%;
-            margin-top: 20px;
+        }
+        .table td {
+            white-space: normal; /* 換一行 */
+            overflow: hidden;    /* 隱藏溢出部分 */
+            text-overflow: ellipsis; /* 使用省略號表示溢出 */
+            max-width: 80px; /* 設定最大寬度，調整此數值來控制截斷的位置 */
         }
         .header {
             text-align: center;
@@ -32,6 +42,9 @@
             position: absolute;
             top: 20px;
             left: 20px;
+        }
+        .container{
+            left: 0;
         }
     </style>
 </head>
@@ -75,13 +88,13 @@
                         </div>
                     </li>
                 </ul>
-                <div class="navbar-text welcome-message">
-                    Welcome, {{ session['user'] }}!
+                
+                <div class="d-flex ">
+                    <div class="navbar-text welcome-message">
+                        Welcome, {{ session['user'] }}!
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 </div>
-                <div class="navbar-text">
-                    
-                </div>
-                <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
                 
             </div>
         </div>
