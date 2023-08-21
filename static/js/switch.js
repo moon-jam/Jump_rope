@@ -4,6 +4,7 @@
 
 (function () {
   let lightSwitch = document.getElementById('lightSwitch');
+  const modeLabel = document.getElementById('modeLabel');
   if (!lightSwitch) {
     return;
   }
@@ -42,6 +43,7 @@
       lightSwitch.checked = true;
     }
     localStorage.setItem('lightSwitch', 'dark');
+    modeLabel.textContent = 'Switch to Light';
   }
 
   /**
@@ -77,6 +79,7 @@
       lightSwitch.checked = false;
     }
     localStorage.setItem('lightSwitch', 'light');
+    modeLabel.textContent = 'Switch to Dark';
   }
 
   /**

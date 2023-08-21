@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .error-container {
+            text-align: center;
+        }
+        .error-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .jump-rope-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .redirect-info {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+    </style>
+    <script>
+        var countdown = 3;
+        function startCountdown() {
+            var countdownElement = document.getElementById("countdown");
+            countdownElement.textContent = countdown;
+            countdown--;
+
+            if (countdown < 0) {
+                window.location.href = "/";
+            } else {
+                setTimeout(startCountdown, 1000);
+            }
+        }
+        setTimeout(startCountdown, 1000);
+    </script>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-title">404</div>
+        <div class="error-message">Oops! Page not found.</div>
+        <div class="redirect-info">You will be redirected to the homepage in <span id="countdown">3</span> seconds.</div>
+    </div>
+</body>
+</html>

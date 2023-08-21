@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
     <title>Rule</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/switch.css') }}" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+        body {
+            padding: 70px;
+        }
         .table-hover tbody tr:hover {
             background-color: #f5f5f5;
         }
@@ -14,7 +21,7 @@
             text-align: center;
             margin-bottom: 40px;
         }
-        .login-button {
+        .logout-button {
             position: absolute;
             top: 20px;
             right: 20px;
@@ -39,31 +46,39 @@
 </div>
 //-->
 <body>
-    <div class="container mt-4">
-        <div class="header">
-            <h1>Rule</h1>
-            <div class="login-button">
-                <a class="bottom_btn btn btn-primary d-flex justify-content-center" href="/login">Sign in with Google</a>
-            </div>
-            <div class="home-button">
-                <div class="form-check form-switch ms-3 mt-5 me-5">
-                    <input class="form-check-input" type="checkbox" id="lightSwitch"/>
-                    <label class="form-check-label ms-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
-                            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
-                        </svg>
-                    </label>
-                </div>
-            </div>
-            <div class="home-button">
-                <a href="/" class="btn btn-primary">Back to Home</a>
-                <a href="{{ url_for('ranking') }}" class="btn btn-primary">Ranking</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Jump Rope League</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('ranking') }}">Ranking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('rule') }}">Rule</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="form-check form-switch switch-button nav-link">
+                            <input class="form-check-input" type="checkbox" id="lightSwitch" />
+                            <label class="form-check-label" for="lightSwitch">
+                                <span id="modeLabel">Switch to Dark</span>
+                                <i class="fa-solid fa-circle-half-stroke"></i>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <a class="btn btn-primary" href="/login">Sign in with Google</a>
             </div>
         </div>
-        
+    </nav>
+    <div class="container">
         <h2>Upload Video Format:</h2>
         <p>Accepted formats: '.mp4', '.avi', '.mov', '.mkv', '.webm', '.wmv', '.m4v'</p>
         <p>Video length should be between 30 seconds and 1 minute.</p>
+        <p>Please ensure that the uploaded video is a vertical 16:9 aspect ratio, and make sure that your body and the jump rope are within the frame to avoid any issues during recognition.</p>
         
         <h2>Scoring Rules:</h2>
         <p>open 2 points, cross 3 points, magic cross 5 points.</p>
@@ -76,7 +91,10 @@
         <h2>Jump Rope Tricks Demonstrations:</h2>
         <p>Warning: Please perform each jump in a regular single rotation manner. If using alternate foot step jump, count approximately every two jumps as one. And such as double, triple, or higher unders will be counted as a single jump.</p>
         <p>Watch the demonstration video below:</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/your_youtube_video_id" frameborder="0" allowfullscreen></iframe>
+        
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/your_youtube_video_id" frameborder="0" allowfullscreen></iframe>
+        </div>    
     </div>
     <script src="{{ url_for('static', filename='js/switch.js') }}"></script>
 </body>

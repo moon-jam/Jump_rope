@@ -1,17 +1,24 @@
-#lightSwitch {
-  transform: scale(1.8);
+.switch-button input[type="checkbox"] {
+  display: none; /* 隱藏原本的 checkbox */
+}
+.navbar-text.welcome-message {
+  margin-right: 20px; /* 調整適當的間距 */
+}
+.navbar {
+  border-bottom: 1px solid #ccc; /* 調整顏色和寬度 */
 }
 
-.custom-theme.bg-light {
-  background-color: darkslategray !important;
-  border-radius: 3px;
-  color: gainsboro;
-  text-decoration: underline;
+.video-container {
+  position: relative;
+  left: 7.5%;
+  width: 85%; /* 調整為您想要的寬度百分比 */
+  padding-bottom: 47.8125%; /* 16:9 偵輯比例（高度/寬度） */
+  height: 0;
+  overflow: hidden;
 }
-
-.custom-theme.bg-dark {
-  background-color: blanchedalmond !important;
-  box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5);
-  color: dimgray;
-  text-decoration: overline;
+.video-container iframe {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
