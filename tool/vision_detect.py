@@ -56,7 +56,7 @@ def process_video(input_path, output_path):
         ret, frame = cap.read()
         if ret:
             # frame = cv2.rotate(frame, cv2.ROTATE_180)
-            frame = cv2.resize(frame,(1080,1920))
+            frame = cv2.resize(frame,(720,1280))
             rope_results = rope_model(frame)
             frame = rope_results[0].plot()
             motion_results = motion_model(frame)
@@ -73,15 +73,15 @@ def process_video(input_path, output_path):
             try:
                 high = bboxInfo['center'][1]
 
-                if high - last_high < -5:
+                if high - last_high < -3.3:
                     up = True
                     down = False
                     highest = high
                     stage = "up"
                     err = 0
-                elif high - last_high > 5:
+                elif high - last_high > 3.3:
                     down = True
-                    if up and down and lowest - highest > 15:
+                    if up and down and lowest - highest > 10:
                         counter = counter + 1
                         highest = lowest + 600
                         # {-1: 'None', 0: 'LF', 1: 'LFRB', 2: 'RF', 3: 'RFLB', 4: 'cross', 5: 'oepn'}
