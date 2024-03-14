@@ -9,8 +9,8 @@ app_secret_key = 'secret_key'
 app = Flask(__name__)
 app.secret_key = app_secret_key
 
-CLIENT_ID = '***REMOVED***'
-CLIENT_SECRET = "***REMOVED***"
+CLIENT_ID = ""
+CLIENT_SECRET = ""
 
 if __name__ == '__main__':
     app = Flask(__name__, template_folder="../templates")
