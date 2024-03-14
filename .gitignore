@@ -2,3 +2,5 @@ config.py
 server.csr
 server.key
 passwords.txt
+__pycache__/
+tool/__pycache__/
