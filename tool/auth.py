@@ -3,14 +3,13 @@ import requests
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import os
-
-app_secret_key = 'secret_key'
+import config
 
 app = Flask(__name__)
-app.secret_key = app_secret_key
+app.secret_key = config.app_secret_key
 
-CLIENT_ID = ""
-CLIENT_SECRET = ""
+CLIENT_ID = config.CLIENT_ID
+CLIENT_SECRET = config.CLIENT_SECRET
 
 if __name__ == '__main__':
     app = Flask(__name__, template_folder="../templates")

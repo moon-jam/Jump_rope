@@ -208,5 +208,5 @@ def sitemap():
     return send_from_directory(app.static_folder, request.path[1:])
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000) #, ssl_context=('server.csr', 'server.key'))
+    app.run(host='0.0.0.0', debug=True, port=5000, ssl_context=('server.csr', 'server.key'))
     
