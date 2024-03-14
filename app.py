@@ -19,6 +19,12 @@ PROCESSED_FOLDER = 'processed'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
+if not os.path.exists(app.config['PROCESSED_FOLDER']):
+    os.makedirs(app.config['PROCESSED_FOLDER'])
+
 gpu_lock = threading.Lock()
 
 def process_video(input_path, output_path):
