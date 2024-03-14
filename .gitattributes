@@ -1,6 +1,0 @@
-*.psd filter=lfs diff=lfs merge=lfs -text
-*.mp4 filter=lfs diff=lfs merge=lfs -text
-*.mov filter=lfs diff=lfs merge=lfs -text
-test_vid/test3.mp4 filter=lfs diff=lfs merge=lfs -text
-test_vid/test30s.mp4 filter=lfs diff=lfs merge=lfs -text
-processed/processed_20230730201150_test30s.mp4 filter=lfs diff=lfs merge=lfs -text
