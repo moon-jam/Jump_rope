@@ -1,3 +1,4 @@
 config.py
 server.csr
 server.key
+passwords.txt
