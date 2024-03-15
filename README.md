@@ -17,9 +17,9 @@ Jump Rope League is an innovative web application designed to enhance the experi
 
 Before running the application, you need to configure several files:
 
-1. **config.py**: This file contains configuration for the Flask application. You can use `[config_template.py](./config_template.py)` as a starting point. You need to set `app_secret_key` which is used as the secret key in Flask. You also need to set `CLIENT_ID` and `CLIENT_SECRET` which are used for Google OAuth. Rename `config_template.py` to `config.py` after setting your information.
+1. **config.py**: This file contains configuration for the Flask application. You can use [`config_template.py`](./config_template.py) as a starting point. You need to set `app_secret_key` which is used as the secret key in Flask. You also need to set `CLIENT_ID` and `CLIENT_SECRET` which are used for Google OAuth. Rename `config_template.py` to `config.py` after setting your information.
 
-2. **server.csr and server.key**: These files are used for HTTPS SSL configuration. You can use `[server_template.csr](./server_template.csr)` and `[server_template.key](./server_template.key)` as starting points. You need to generate these files and place them in the appropriate location. Rename `server_template.csr` and `server_template.key` to `server.csr` and `server.key` respectively after setting your information.
+2. **server.csr and server.key**: These files are used for HTTPS SSL configuration. You can use [`server_template.csr`](./server_template.csr) and [`server_template.key`](./server_template.key) as starting points. You need to generate these files and place them in the appropriate location. Rename `server_template.csr` and `server_template.key` to `server.csr` and `server.key` respectively after setting your information.
 
 Please make sure to update these files with your own information before running the application.
 
