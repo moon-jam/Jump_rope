@@ -116,7 +116,7 @@ def video_list():
         if vid_user[video] != session['email']:
             continue
         
-        processed_filename = 'processed_' + video
+        # processed_filename = 'processed_' + video
         filename = os.path.splitext(video)[0]
         json_filename = 'processed_' + filename + '.json'
         
@@ -144,14 +144,15 @@ def video_list():
                     'full_filename': video
                 })
         else:
+            PROCESSING_TEXT = 'Processing...'
             video_list_info.append({
                 'video_name': name_str,
                 'upload_time': formatted_upload_time,
-                'open_times': 'Processing...',
-                'cross_times': 'Processing...',
-                'magic_cross_times': 'Processing...',
-                'score': 'Processing...',
-                'rank': 'Processing...',
+                'open_times': PROCESSING_TEXT,
+                'cross_times': PROCESSING_TEXT,
+                'magic_cross_times': PROCESSING_TEXT,
+                'score': PROCESSING_TEXT,
+                'rank': PROCESSING_TEXT,
                 'full_filename': video
             })
 
