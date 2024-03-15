@@ -13,7 +13,19 @@ Jump Rope League is an innovative web application designed to enhance the experi
 - **Dark Mode**: A toggle switch for users to switch between light and dark modes for better usability.
 - **Responsive Design**: Ensures a consistent experience across various devices and screen sizes.
 
+## Configuration
+
+Before running the application, you need to configure several files:
+
+1. **config.py**: This file contains configuration for the Flask application. You can use `[config_template.py](./config_template.py)` as a starting point. You need to set `app_secret_key` which is used as the secret key in Flask. You also need to set `CLIENT_ID` and `CLIENT_SECRET` which are used for Google OAuth. Rename `config_template.py` to `config.py` after setting your information.
+
+2. **server.csr and server.key**: These files are used for HTTPS SSL configuration. You can use `[server_template.csr](./server_template.csr)` and `[server_template.key](./server_template.key)` as starting points. You need to generate these files and place them in the appropriate location. Rename `server_template.csr` and `server_template.key` to `server.csr` and `server.key` respectively after setting your information.
+
+Please make sure to update these files with your own information before running the application.
+
 ## Setup
+
+Before setting up the environment and running the application, make sure you have completed the above configuration steps.
 
 ### Local Python/Virtual Environment
 
@@ -65,7 +77,7 @@ Jump Rope League is an innovative web application designed to enhance the experi
    docker run -p 5000:5000 jump_rope
    ```
 
-## Configuration
+## Deployment
 
 ### Gunicorn (Linux/Mac)
 
@@ -94,6 +106,28 @@ Jump Rope League is an innovative web application designed to enhance the experi
 ### Using Docker
 
 - Ensure Docker daemon is running and use the Docker commands listed in the Setup section.
+
+## FAQ
+
+### How do I apply for Google OAuth?
+
+To apply for Google OAuth, follow these steps:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+
+2. Create a new project or select an existing one.
+
+3. In the sidebar, click on "APIs & Services" and then "Credentials".
+
+4. Click on "Create Credentials" and select "OAuth client ID".
+
+5. If you haven't configured the consent screen yet, you'll be prompted to do so. Fill in the necessary information.
+
+6. After configuring the consent screen, select "Web application" as the application type. Enter the name for your OAuth client ID.
+
+7. Under "Authorized redirect URIs", enter the URI where you'll be redirected after the authentication process. For local development, this is usually `http://localhost:5000/`.
+
+8. Click "Create". You'll be given a client ID and a client secret. Use these in your `config.py` file.
 
 ## License
 
