@@ -125,7 +125,7 @@ def video_list():
         
         upload_time = datetime.strptime(time_str, '%Y%m%d%H%M%S')  # 轉換成 datetime 物件
         formatted_upload_time = upload_time.strftime('%Y-%m-%d %H:%M:%S')  # 格式化成 'yyyy-mm-dd HH:MM'
-        
+
         if json_filename in processed_videos:
             
             rank = _ranking.get_ranking(filename)
@@ -145,14 +145,31 @@ def video_list():
                 })
         else:
             PROCESSING_TEXT = 'Processing...'
+            json_path = os.path.join(app.config['PROCESSED_FOLDER'], json_filename)
+            base, ext = os.path.splitext(json_path)
+            progress_json_path = f"{base}_progress{ext}"
+
+            if os.path.exists(progress_json_path):
+                with open(progress_json_path, 'r') as f:
+                    progress_info = json.load(f)
+                    progress = progress_info.get('progress', 0)
+                    elapsed_time = progress_info.get('elapsed_time', 0)
+                    remaining_time = progress_info.get('remaining_time', 0)
+                    open_times = f'Progress: {progress}%'
+                    cross_times = f'Elapsed time: {elapsed_time}min'
+                    magic_cross_times = f'Remaining time: {remaining_time}min'
+            else:
+                open_times = 'Processing...'
+                cross_times = 'Processing...'
+                magic_cross_times = 'Processing...'
             video_list_info.append({
                 'video_name': name_str,
                 'upload_time': formatted_upload_time,
-                'open_times': PROCESSING_TEXT,
+                'open_times': open_times,
                 'cross_times': PROCESSING_TEXT,
-                'magic_cross_times': PROCESSING_TEXT,
+                'magic_cross_times': cross_times,
                 'score': PROCESSING_TEXT,
-                'rank': PROCESSING_TEXT,
+                'rank': magic_cross_times,
                 'full_filename': video
             })
 
@@ -215,5 +232,5 @@ def sitemap():
     return send_from_directory(app.static_folder, request.path[1:])
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000, ssl_context=('server.crt', 'server.key'))
+    app.run(host='0.0.0.0', port=5000, ssl_context=('server.crt', 'server.key'))
     

@@ -5,6 +5,8 @@ import json
 import cv2
 import os
 from tqdm import tqdm
+import time
+import datetime
 
 try:
     import ranking
@@ -19,6 +21,7 @@ motion_model = YOLO(motion_model_path)
 def process_video(input_path, output_path):
     
     json_path = os.path.splitext(output_path)[0] + '.json'
+    progress_json_path = os.path.splitext(output_path)[0] + '_progress.json'
     tmp_name = os.path.splitext(output_path)[0][10:34]+'.mp4'
     print("\n\n\ntmp:"+tmp_name) 
     
@@ -52,9 +55,9 @@ def process_video(input_path, output_path):
     out = cv2.VideoWriter('processed/'+tmp_name, 
                             cv2.VideoWriter_fourcc(*'mp4v'),
                             input_fps, size)
-    
+    start_time = time.time()
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    for _ in tqdm(range(total_frames), desc="Processing video"):
+    for i in tqdm(range(total_frames), desc="Processing video"):
         ret, frame = cap.read()
         if ret:
             # frame = cv2.rotate(frame, cv2.ROTATE_180)
@@ -135,12 +138,25 @@ def process_video(input_path, output_path):
                 cv2.imshow('video', frame)
             # cv2.imshow('video', frame)
             
-            # current_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
-            # total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-            # progress = (current_frame / total_frames) * 100
-            # elapsed_time = time.time() - start_time
-            # remaining_time = ((100 - progress) / progress) * elapsed_time if progress > 0 else 0
-            # print(f"Progress: {progress:.2f}% - Elapsed Time: {str(datetime.timedelta(seconds=int(elapsed_time)))} - Estimated Remaining Time: {str(datetime.timedelta(seconds=int(remaining_time)))}")
+            current_frame = i + 1
+            progress = (current_frame / total_frames) * 100
+            elapsed_time = time.time() - start_time
+            remaining_time = ((100 - progress) / progress) * elapsed_time
+            
+            # Convert numbers to integers
+            progress = int(progress)
+            elapsed_time, _ = divmod(int(elapsed_time), 60)
+            remaining_time, _ = divmod(int(remaining_time), 60)
+
+            print(progress , elapsed_time , remaining_time ,  progress%2)
+            if progress%2 == 0:
+                print("Help")
+                with open(progress_json_path, "w") as f:
+                    json.dump({
+                        "progress": progress,
+                        "elapsed_time": elapsed_time,
+                        "remaining_time": remaining_time
+                    }, f)
         else:
             break
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
@@ -162,6 +178,7 @@ def process_video(input_path, output_path):
     os.system("ffmpeg -i processed/"+tmp_name+" -vcodec libx264 -f mp4 processed/out.mp4")
     os.remove("processed/"+tmp_name)
     os.rename("processed/out.mp4",output_path)
+    os.remove(progress_json_path)
     print("The video was successfully saved")
     
 
