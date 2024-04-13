@@ -4,3 +4,6 @@ server.key
 passwords.txt
 __pycache__/
 tool/__pycache__/
+server.crt
+test_vid
+test.py

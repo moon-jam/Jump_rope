@@ -4,6 +4,7 @@ import time
 import json
 import cv2
 import os
+from tqdm import tqdm
 
 try:
     import ranking
@@ -52,7 +53,8 @@ def process_video(input_path, output_path):
                             cv2.VideoWriter_fourcc(*'mp4v'),
                             input_fps, size)
     
-    while True:
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    for _ in tqdm(range(total_frames), desc="Processing video"):
         ret, frame = cap.read()
         if ret:
             # frame = cv2.rotate(frame, cv2.ROTATE_180)
@@ -132,6 +134,13 @@ def process_video(input_path, output_path):
             if __name__ == '__main__' or cv2.waitKey(1) == ord('v'):
                 cv2.imshow('video', frame)
             # cv2.imshow('video', frame)
+            
+            # current_frame = cap.get(cv2.CAP_PROP_POS_FRAMES)
+            # total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+            # progress = (current_frame / total_frames) * 100
+            # elapsed_time = time.time() - start_time
+            # remaining_time = ((100 - progress) / progress) * elapsed_time if progress > 0 else 0
+            # print(f"Progress: {progress:.2f}% - Elapsed Time: {str(datetime.timedelta(seconds=int(elapsed_time)))} - Estimated Remaining Time: {str(datetime.timedelta(seconds=int(remaining_time)))}")
         else:
             break
         if cv2.waitKey(1) == ord('q') and __name__ == '__main__':
@@ -157,5 +166,5 @@ def process_video(input_path, output_path):
     
 
 if __name__ == '__main__':
-    process_video('./test_vid/test0.mp4', './test_vid/output.mp4')
+    process_video('./test_vid/test.mp4', './test_vid/output.mp4')
     
